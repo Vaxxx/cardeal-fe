@@ -5,10 +5,11 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import React from "react";
 import Typography from "@mui/material/Typography";
-import Carlist from "./components/Carlist";
-import Link from "./Link";
+import Login, {logout} from "./components/Login";
+import Button from "@mui/material/Button";
 
 function App() {
+
   return (
      <Container>
        <AppBar position="static">
@@ -16,10 +17,11 @@ function App() {
            <Typography variant="h6">
              Car Deals
            </Typography>
+
          </Toolbar>
+           {/*<Button variant="error" onClick={logout}>Log Out</Button>*/}
        </AppBar>
-         {/*<Carlist/>*/}
-         <Link/>
+         <Login/>
      </Container>
   );
 }

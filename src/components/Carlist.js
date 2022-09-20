@@ -15,7 +15,11 @@ const CarList = () => {
 
     //get all cars
     const fetchCars = () => {
-        fetch(SERVER_URL + 'api/cars')
+        //get the token from the sessionStorage => jwtToken
+        const token = sessionStorage.getItem("jwtToken");
+        fetch(SERVER_URL + 'api/cars',{
+            headers: {'Authorization': token}
+        })
             .then(response => response.json())
             .then(data => setCars(data._embedded.cars))
             .catch(err => console.log(err));
@@ -24,7 +28,10 @@ const CarList = () => {
     //delete a car
     const onDelClick = (url) => {
         if(window.confirm("Are you sure you want to delete? ")){
-            fetch(url, {method: 'DELETE'})
+            const token = sessionStorage.getItem("jwtToken")
+            fetch(url, {method: 'DELETE',
+             headers: {'Authorization': token}
+            })
                 .then(response => {
                     if(response.ok){
                         fetchCars();
@@ -39,10 +46,14 @@ const CarList = () => {
     //add a car
 
     const addCar = (car) => {
+        const token = sessionStorage.getItem("jwtToken")
         fetch(SERVER_URL + 'api/cars',
             {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization' : token
+                },
                 body: JSON.stringify(car)
             }).then(response => {
                 if(response.ok){
@@ -55,10 +66,14 @@ const CarList = () => {
 
     //update car
     const updateCar = (car, link) => {
+        const token = sessionStorage.getItem("jwtToken")
         fetch(link,
             {
                 method: 'PUT',
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization' : token
+                },
                 body: JSON.stringify(car)
             }).then(response => {
                 if(response.ok){
